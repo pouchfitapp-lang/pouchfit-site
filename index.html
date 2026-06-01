@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PouchFit — Move first. Scroll second.</title>
+<title>PouchFit — Move while you scroll</title>
+<meta name="description" content="Squeeze in 21 minutes of movement while you doomscroll. PouchFit's audio coach guides invisible micro-movements while you scroll TikTok, Reels, or anything else. No gym. No equipment.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥔</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -175,6 +177,7 @@
     box-shadow: 0 30px 70px rgba(26,26,26,0.18), 0 0 0 1px rgba(255,255,255,0.05);
     animation: levitate 5s ease-in-out infinite;
   }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
   @keyframes levitate {
     0%,100% { transform: translateY(0px) rotate(-1.5deg); }
     50%      { transform: translateY(-14px) rotate(-1.5deg); }
@@ -650,14 +653,115 @@
     content: '▸'; color: var(--accent);
     position: absolute; left: 0; font-size: 0.75rem; top: 0.25em;
   }
+  .psec h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 1.4rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .psec a { color: var(--accent-dark); font-weight: 600; }
+  .psec a:hover { text-decoration: underline; }
+  .psec strong { color: var(--text); font-weight: 700; }
+  .psec code {
+    background: var(--accent-pale);
+    color: var(--accent-dark);
+    padding: 1px 7px;
+    border-radius: 5px;
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.84em;
+    border: 1px solid var(--border);
+    font-weight: 600;
+  }
+  .psec table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.2rem;
+    font-size: 0.88rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .psec table th {
+    background: var(--accent-pale);
+    color: var(--text);
+    font-weight: 700;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--border-mid);
+  }
+  .psec table td {
+    padding: 10px 14px;
+    color: #444;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.55;
+  }
+  .psec table tr:last-child td { border-bottom: none; }
+  .psec table tr:nth-child(even) td { background: rgba(248,109,0,0.025); }
   .pcontact {
     background: var(--accent-pale);
     border: 1px solid var(--border-mid);
     border-radius: var(--radius);
     padding: 22px 26px; margin-top: 1.5rem;
   }
-  .pcontact p { margin: 0; font-size: 0.91rem; }
+  .pcontact p { margin: 0; font-size: 0.91rem; line-height: 1.8; }
   .pcontact a { color: var(--accent-dark); font-weight: 700; }
+  .pfoot-note {
+    margin-top: 2rem;
+    padding: 14px 18px;
+    background: var(--bg);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+  }
+  .ptoc {
+    background: var(--bg-warm);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-bottom: 3rem;
+  }
+  .ptoc-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .ptoc ol {
+    list-style: none;
+    counter-reset: ptoc;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+  }
+  .ptoc ol li {
+    counter-increment: ptoc;
+    font-size: 0.86rem;
+  }
+  .ptoc ol li a {
+    color: var(--text-mid);
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    padding: 4px 0;
+  }
+  .ptoc ol li a::before {
+    content: counter(ptoc) ". ";
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 4px;
+  }
+  .ptoc ol li a:hover { color: var(--accent); text-decoration: none; }
+  @media (max-width: 600px) {
+    .ptoc ol { grid-template-columns: 1fr; }
+  }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 880px) {
@@ -673,30 +777,25 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     LANDING PAGE
-════════════════════════════════════════════ -->
-<div id="page-landing">
-
 <nav>
-  <a class="nav-logo" href="#page-landing">🥔 PouchFit<span class="dot">.</span></a>
+  <a class="nav-logo" href="/">🥔 PouchFit<span class="dot">.</span></a>
   <ul class="nav-links">
     <li><a href="#why">Why PouchFit</a></li>
     <li><a href="#how">How It Works</a></li>
-    <li><a href="#page-privacy" class="to-privacy">Privacy</a></li>
+    <li><a href="/privacy/">Privacy</a></li>
   </ul>
-  <a class="nav-cta" href="#cta">Get the app</a>
+  <a class="nav-cta" href="#cta">Join waitlist</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-badge">🥔 The anti-scroll fitness app</div>
-      <h1>Move first.<br>Then <span class="hi">scroll.</span></h1>
-      <p class="hero-sub">PouchFit locks your most-scrolled apps until you do a quick movement routine. No willpower required.</p>
+      <div class="hero-badge">🥔 Move while you scroll</div>
+      <h1>Turn scroll time<br>into <span class="hi">workout time.</span></h1>
+      <p class="hero-sub">Squeeze in 21 minutes of movement while you doomscroll. No gym. No equipment. No leaving your app.</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="#cta">📱 Get PouchFit free</a>
+        <a class="btn-primary" href="#cta">📱 Join the waitlist</a>
         <a class="btn-ghost" href="#how">How it works →</a>
       </div>
     </div>
@@ -713,31 +812,34 @@
               <div class="app-avo">🥔</div>
             </div>
             <div class="lock-card">
-              <div class="lock-label">Locked for</div>
-              <div class="lock-time">7 min</div>
-              <div class="lock-sub">Move to unlock 💪</div>
+              <div class="lock-label">Now playing</div>
+              <div class="lock-time" style="font-size:1.5rem;">🎧 Couch Crusher</div>
+              <div class="lock-sub">12 min · 6 moves</div>
+              <div style="height:5px;background:rgba(255,255,255,0.25);border-radius:3px;margin-top:10px;overflow:hidden;">
+                <div style="height:100%;width:38%;background:#fff;border-radius:3px;"></div>
+              </div>
             </div>
-            <div class="blocked-label">Currently blocked</div>
+            <div class="blocked-label">Up next</div>
             <div class="app-row">
-              <div class="app-icon" style="background:#FF0050;color:#fff;">♪</div>
-              <div class="app-name">TikTok</div>
-              <div class="app-status">🔒 Locked</div>
-            </div>
-            <div class="app-row">
-              <div class="app-icon" style="background:linear-gradient(135deg,#F58529,#DD2A7B);color:#fff;">📷</div>
-              <div class="app-name">Instagram</div>
-              <div class="app-status">🔒 Locked</div>
+              <div class="app-icon" style="background:var(--accent-pale);font-size:0.95rem;">🦵</div>
+              <div class="app-name">Calf Raises</div>
+              <div class="app-status">30s</div>
             </div>
             <div class="app-row">
-              <div class="app-icon" style="background:#1A1A1A;color:#fff;">𝕏</div>
-              <div class="app-name">X / Twitter</div>
-              <div class="app-status">🔒 Locked</div>
+              <div class="app-icon" style="background:var(--accent-pale);font-size:0.95rem;">🍑</div>
+              <div class="app-name">Glute Squeezes</div>
+              <div class="app-status">45s</div>
+            </div>
+            <div class="app-row">
+              <div class="app-icon" style="background:var(--accent-pale);font-size:0.95rem;">🙆</div>
+              <div class="app-name">Shoulder Rolls</div>
+              <div class="app-status">30s</div>
             </div>
           </div>
         </div>
-        <div class="fp fp-1">🔒 3 apps locked</div>
-        <div class="fp fp-2">💪 5 min to unlock</div>
-        <div class="fp fp-3">🔥 12-day streak</div>
+        <div class="fp fp-1">🎧 In your headphones</div>
+        <div class="fp fp-2">📱 Keep scrolling</div>
+        <div class="fp fp-3">💪 Invisible moves</div>
       </div>
     </div>
   </div>
@@ -760,7 +862,7 @@
     <div class="problem-eyebrow">Real talk</div>
     <h2>You opened TikTok<br>for <span class="strike">"just a minute."</span></h2>
     <div class="punch">It's been <span class="num">47</span>.</div>
-    <p class="closer">No shame — we've all been the potato 🥔<br>PouchFit just makes sure your body gets a turn first.</p>
+    <p class="closer">No shame — we've all been the potato 🥔<br>You're not gonna stop scrolling. So we built workouts that come to you.</p>
   </div>
 </section>
 
@@ -768,45 +870,42 @@
 <section class="why" id="why">
   <div class="why-head">
     <div class="section-label">Why PouchFit</div>
-    <h2>Less scroll guilt.<br>More <span class="hi">guilt-free</span> scrolling.</h2>
-    <p>Three things that make PouchFit different from every fitness app you've quietly deleted.</p>
+    <h2>Tiny moves.<br>Big <span class="hi">difference.</span></h2>
+    <p>Three ways PouchFit slips fitness into the scrolling you're already doing.</p>
   </div>
 
   <div class="container">
 
-    <!-- Row 1 -->
+    <!-- Row 1 · Invisible Moves -->
     <div class="why-row">
       <div class="why-text">
-        <div class="label">01 · The Lock</div>
-        <h3>Lock the apps<br>that <span class="hi">own you.</span></h3>
-        <p>Instagram. TikTok. X. Reddit. You pick what gets blocked. We make sure you've earned the unlock.</p>
+        <div class="label">01 · Invisible Moves</div>
+        <h3>Moves so subtle,<br>nobody <span class="hi">notices.</span></h3>
+        <p>Calf raises. Glute squeezes. Toe taps. Shoulder rolls. Micro-movements you can do on the couch, in line at the cafe, or under your desk — nobody around you will catch on.</p>
       </div>
       <div class="why-image">
         <div class="ph-placeholder">
           <div class="ph-content">
-            <div class="ph-block">
-              <div class="ph-square" style="background:#FF0050;"></div>
-              <div class="ph-app-meta">
-                <div class="ph-text-line"></div>
-                <div class="ph-text-line short"></div>
-              </div>
-              <div class="ph-square ph-locked-icon" style="font-size:0.7rem;display:flex;align-items:center;justify-content:center;">🔒</div>
+            <div class="ph-block big" style="align-items:center;text-align:center;">
+              <div style="font-size:3rem;line-height:1;">🦵</div>
+              <div class="ph-big-label" style="margin-top:8px;">Current move</div>
+              <div class="ph-big-val">Calf Raises</div>
+              <div style="font-size:0.65rem;font-weight:600;opacity:0.8;margin-top:4px;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:50px;">👀 Invisible to others</div>
             </div>
             <div class="ph-block">
-              <div class="ph-square" style="background:linear-gradient(135deg,#F58529,#DD2A7B);"></div>
+              <div class="ph-square" style="background:var(--accent-pale);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">🍑</div>
               <div class="ph-app-meta">
                 <div class="ph-text-line"></div>
                 <div class="ph-text-line short"></div>
               </div>
-              <div class="ph-square ph-locked-icon" style="font-size:0.7rem;display:flex;align-items:center;justify-content:center;">🔒</div>
+              <div style="font-size:0.55rem;font-weight:700;color:var(--text-muted);">NEXT</div>
             </div>
             <div class="ph-block">
-              <div class="ph-square" style="background:#1A1A1A;"></div>
+              <div class="ph-square" style="background:var(--accent-pale);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">🙆</div>
               <div class="ph-app-meta">
                 <div class="ph-text-line"></div>
                 <div class="ph-text-line short"></div>
               </div>
-              <div class="ph-square ph-locked-icon" style="font-size:0.7rem;display:flex;align-items:center;justify-content:center;">🔒</div>
             </div>
           </div>
           <div class="ph-tag">📱 Screenshot</div>
@@ -814,7 +913,7 @@
       </div>
     </div>
 
-    <!-- Row 2 -->
+    <!-- Row 2 · The Move -->
     <div class="why-row">
       <div class="why-text">
         <div class="label">02 · The Move</div>
@@ -825,25 +924,30 @@
         <div class="ph-placeholder">
           <div class="ph-content">
             <div class="ph-block big">
-              <div class="ph-big-label">Now playing</div>
-              <div class="ph-big-val">▶ Seated Stretch</div>
-              <div style="height:6px;background:rgba(255,255,255,0.25);border-radius:3px;width:100%;margin-top:8px;overflow:hidden;">
-                <div style="height:100%;width:60%;background:#fff;border-radius:3px;"></div>
+              <div class="ph-big-label">🎧 Now playing</div>
+              <div class="ph-big-val">Couch Crusher</div>
+              <div style="display:flex;align-items:flex-end;gap:3px;margin-top:10px;height:24px;">
+                <div style="flex:1;background:#fff;border-radius:2px;height:40%;opacity:0.7;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:80%;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:55%;opacity:0.85;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:95%;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:70%;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:45%;opacity:0.7;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:85%;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:60%;opacity:0.85;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:75%;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:35%;opacity:0.5;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:90%;"></div>
+                <div style="flex:1;background:#fff;border-radius:2px;height:50%;opacity:0.7;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:0.62rem;font-weight:600;opacity:0.85;">
+                <span>4:32</span><span>12:00</span>
               </div>
             </div>
-            <div class="ph-block">
-              <div class="ph-square" style="background:var(--accent-pale);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">🦵</div>
-              <div class="ph-app-meta">
-                <div class="ph-text-line"></div>
-                <div class="ph-text-line short"></div>
-              </div>
-            </div>
-            <div class="ph-block">
-              <div class="ph-square" style="background:var(--accent-pale);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">🧘</div>
-              <div class="ph-app-meta">
-                <div class="ph-text-line"></div>
-                <div class="ph-text-line short"></div>
-              </div>
+            <div class="ph-block" style="justify-content:center;gap:14px;">
+              <div style="font-size:1.1rem;">⏮</div>
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.8rem;">⏸</div>
+              <div style="font-size:1.1rem;">⏭</div>
             </div>
           </div>
           <div class="ph-tag">📱 Screenshot</div>
@@ -851,10 +955,47 @@
       </div>
     </div>
 
-    <!-- Row 3 -->
+    <!-- Row 3 · Keep Scrolling -->
     <div class="why-row">
       <div class="why-text">
-        <div class="label">03 · The Cheer Squad</div>
+        <div class="label">03 · Keep Scrolling</div>
+        <h3>Runs in the background.<br>You never leave the <span class="hi">brainrot.</span></h3>
+        <p>PouchFit plays while you watch. No switching apps, no interrupted feeds. Your workout doesn't compete with your For You Page — it joins it.</p>
+      </div>
+      <div class="why-image">
+        <div class="ph-placeholder">
+          <div class="ph-content">
+            <div style="background:#000;border-radius:12px;flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;min-height:200px;">
+              <div style="position:absolute;top:12px;left:14px;font-size:0.62rem;color:rgba(255,255,255,0.7);font-weight:600;">▶ For You</div>
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:2.5rem;opacity:0.4;">🎬</div>
+              <div style="position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;align-items:center;">
+                <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;">❤️</div>
+                <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;">💬</div>
+                <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;">↗</div>
+              </div>
+              <div style="font-size:0.65rem;color:#fff;font-weight:600;line-height:1.3;">@yourfavcreator</div>
+              <div style="font-size:0.6rem;color:rgba(255,255,255,0.7);margin-top:2px;">your daily dose of brainrot 🧠</div>
+            </div>
+            <div style="background:var(--accent);color:#fff;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+              <div style="font-size:1rem;">🎧</div>
+              <div style="flex:1;">
+                <div style="font-size:0.6rem;font-weight:700;opacity:0.8;letter-spacing:0.06em;text-transform:uppercase;">PouchFit · Calf Raises</div>
+                <div style="height:3px;background:rgba(255,255,255,0.3);border-radius:2px;margin-top:3px;overflow:hidden;">
+                  <div style="width:55%;height:100%;background:#fff;border-radius:2px;"></div>
+                </div>
+              </div>
+              <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:0.6rem;">⏸</div>
+            </div>
+          </div>
+          <div class="ph-tag">📱 Screenshot</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4 · The Cheer Squad -->
+    <div class="why-row">
+      <div class="why-text">
+        <div class="label">04 · The Cheer Squad</div>
         <h3>A potato that's <span class="hi">proud</span> of you.</h3>
         <p>Streaks, daily minutes, and a tiny mascot that's quietly rooting for you. No leaderboards, no guilt trips.</p>
       </div>
@@ -885,6 +1026,7 @@
       </div>
     </div>
 
+
   </div>
 </section>
 
@@ -898,29 +1040,29 @@
         <li class="step-item">
           <div class="step-num">1</div>
           <div class="step-content">
-            <h3>Pick your temptations</h3>
-            <p>Choose which apps get blocked until you move.</p>
+            <h3>Pick a routine</h3>
+            <p>5, 10, or 20 minutes. Match it to how long you'd be scrolling anyway.</p>
           </div>
         </li>
         <li class="step-item">
           <div class="step-num">2</div>
           <div class="step-content">
-            <h3>Earn your scroll</h3>
-            <p>Start a quick 5–15 min routine to unlock them.</p>
+            <h3>Pop in your headphones</h3>
+            <p>Or use speakers if it's just you and the cat. We don't judge.</p>
           </div>
         </li>
         <li class="step-item">
           <div class="step-num">3</div>
           <div class="step-content">
-            <h3>Move &amp; browse</h3>
-            <p>Your routine plays in the background while you use your apps freely.</p>
+            <h3>Open your favorite scroll</h3>
+            <p>TikTok, Reels, Netflix, Reddit, X — whatever you were gonna do anyway.</p>
           </div>
         </li>
         <li class="step-item">
           <div class="step-num">4</div>
           <div class="step-content">
-            <h3>Cycle repeats</h3>
-            <p>When the routine ends, apps lock again until your next session.</p>
+            <h3>Move while you watch</h3>
+            <p>Audio coach guides every move in the background. You barely notice. Your body sure does.</p>
           </div>
         </li>
       </ol>
@@ -928,28 +1070,35 @@
     <div class="how-image">
       <div class="ph-placeholder">
         <div class="ph-content">
+          <!-- Active session card -->
           <div class="ph-block big">
-            <div class="ph-big-label">Unlocked for</div>
-            <div class="ph-big-val">12:34</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.5s ease-in-out infinite;"></div>
+              <div class="ph-big-label" style="margin:0;">Session active</div>
+            </div>
+            <div class="ph-big-val" style="margin-top:4px;">🎧 Couch Crusher</div>
             <div style="height:6px;background:rgba(255,255,255,0.25);border-radius:3px;width:100%;margin-top:8px;overflow:hidden;">
-              <div style="height:100%;width:42%;background:#fff;border-radius:3px;"></div>
+              <div style="height:100%;width:48%;background:#fff;border-radius:3px;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:0.62rem;font-weight:600;opacity:0.85;">
+              <span>5:48</span><span>12:00</span>
             </div>
           </div>
-          <div class="ph-block">
-            <div class="ph-square" style="background:#FF0050;"></div>
+          <!-- Currently doing -->
+          <div class="ph-block" style="background:var(--bg-warm);">
+            <div class="ph-square" style="background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.9rem;">🦵</div>
             <div class="ph-app-meta">
-              <div class="ph-text-line"></div>
-              <div class="ph-text-line short"></div>
+              <div style="font-size:0.7rem;font-weight:700;color:var(--text);">Calf Raises</div>
+              <div style="font-size:0.6rem;color:var(--text-muted);font-weight:500;">In progress · 18s left</div>
             </div>
-            <div style="font-size:0.6rem;font-weight:700;color:var(--accent);">✓ OPEN</div>
+            <div style="font-size:1rem;color:var(--accent);">▶</div>
           </div>
-          <div class="ph-block">
-            <div class="ph-square" style="background:linear-gradient(135deg,#F58529,#DD2A7B);"></div>
-            <div class="ph-app-meta">
-              <div class="ph-text-line"></div>
-              <div class="ph-text-line short"></div>
-            </div>
-            <div style="font-size:0.6rem;font-weight:700;color:var(--accent);">✓ OPEN</div>
+          <!-- Background apps -->
+          <div style="font-size:0.55rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin:4px 0 0 4px;">Playing in background</div>
+          <div style="display:flex;gap:6px;">
+            <div style="flex:1;height:36px;background:#FF0050;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#fff;font-weight:700;">♪</div>
+            <div style="flex:1;height:36px;background:linear-gradient(135deg,#F58529,#DD2A7B);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#fff;font-weight:700;">📷</div>
+            <div style="flex:1;height:36px;background:#E50914;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#fff;font-weight:700;">N</div>
           </div>
         </div>
         <div class="ph-tag">📱 Screenshot</div>
@@ -962,25 +1111,25 @@
 <section class="testi">
   <div class="testi-head">
     <div class="section-label">Community</div>
-    <h2>People who'd rather <span class="hi">scroll.</span></h2>
-    <p>Real reviews from people who didn't think this would work either.</p>
+    <h2>Couch potatoes <span class="hi">who moved.</span></h2>
+    <p>Real reviews from people who didn't put their phone down.</p>
   </div>
   <div class="testi-grid">
     <div class="tcard">
       <div class="tstars">★★★★★</div>
-      <p>"PouchFit blocks Instagram until I move. I have never been so flexible against my will."</p>
+      <p>"I did calf raises through 47 minutes of TikTok and didn't miss a single video. My legs are confused. I love it."</p>
       <div class="tname">Mariel T.</div>
       <div class="trole">Remote designer · Manila</div>
     </div>
     <div class="tcard">
       <div class="tstars">★★★★★</div>
-      <p>"Unlocked TikTok by doing seated leg raises. 2025 is a wild year."</p>
+      <p>"First fitness app that doesn't make me put my phone down. 12-day streak and zero willpower used."</p>
       <div class="tname">Dan A.</div>
       <div class="trole">Engineer · Cebu</div>
     </div>
     <div class="tcard">
       <div class="tstars">★★★★★</div>
-      <p>"The potato judges me with such love. 12-day streak and going 🥔"</p>
+      <p>"The audio coach is so chill I forgot I was 'working out.' Then my glutes burned. 10/10 🥔"</p>
       <div class="tname">Bea R.</div>
       <div class="trole">Content creator · Davao</div>
     </div>
@@ -990,11 +1139,11 @@
 <!-- CTA -->
 <section class="cta-section" id="cta">
   <div class="cta-inner">
-    <div class="section-label" style="justify-content:center;margin-bottom:1.4rem;">Start free</div>
-    <h2>Your couch.<br>Your <span class="hi">comeback.</span></h2>
-    <p class="sub">No subscriptions. No equipment. Just your body and that phone you can't put down.</p>
+    <div class="section-label" style="justify-content:center;margin-bottom:1.4rem;">Join the waitlist</div>
+    <h2>Stop being a couch potato.<br>Well actually — <span class="hi">keep being one.</span></h2>
+    <p class="sub">Just move a little. Be first in line when PouchFit launches — waitlist members get launch-week discounts.</p>
     <div class="cta-btns">
-      <a class="btn-primary" href="#">📱 Get it on iOS</a>
+      <a class="btn-primary" href="#">🥔 Join the waitlist</a>
       <a class="btn-dark" href="#how">How it works</a>
     </div>
   </div>
@@ -1003,163 +1152,20 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <a class="footer-logo" href="#page-landing">🥔 PouchFit</a>
+    <a class="footer-logo" href="/">🥔 PouchFit</a>
     <ul class="footer-links">
       <li><a href="#why">Why PouchFit</a></li>
       <li><a href="#how">How it works</a></li>
-      <li><a href="#page-privacy" class="to-privacy">Privacy Policy</a></li>
+      <li><a href="/privacy/">Privacy Policy</a></li>
     </ul>
     <div class="footer-copy">© 2025 PouchFit. Made with 🥔 &amp; love.</div>
   </div>
 </footer>
 
-</div><!-- /page-landing -->
-
-<div class="page-break"></div>
-
-<!-- ═══════════════════════════════════════════
-     PRIVACY POLICY
-════════════════════════════════════════════ -->
-<div id="page-privacy" style="display:none; background:#fff;">
-
-<nav>
-  <a class="nav-logo" href="#page-landing" class="to-landing">🥔 PouchFit<span class="dot">.</span></a>
-  <ul class="nav-links">
-    <li><a href="#page-landing" class="to-landing">← Back to home</a></li>
-  </ul>
-  <a class="nav-cta to-landing" href="#page-landing">Home</a>
-</nav>
-
-<div class="privacy-hero">
-  <h1>Privacy Policy</h1>
-  <p>Effective date: June 1, 2025 &nbsp;·&nbsp; Last updated: June 1, 2025</p>
-</div>
-
-<div class="privacy-body">
-
-  <div class="psec">
-    <h2>1. Introduction</h2>
-    <p>Welcome to PouchFit ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and safeguard your data when you use the PouchFit mobile application ("App").</p>
-    <p>By using PouchFit, you agree to the collection and use of information in accordance with this policy. If you disagree with any part, please discontinue use of the App.</p>
-  </div>
-
-  <div class="psec">
-    <h2>2. Information We Collect</h2>
-    <p>We collect only what is necessary to operate and improve PouchFit. This includes:</p>
-    <ul>
-      <li><strong>Usage data</strong> — Exercise sessions completed, duration, streaks, daily goals, and which apps you've configured to be blocked. Stored locally on your device and optionally in iCloud if sync is enabled.</li>
-      <li><strong>Onboarding preferences</strong> — Your weekly movement goal and routine preferences. Stored locally.</li>
-      <li><strong>Crash and diagnostic data</strong> — Anonymous error reports to help us fix bugs. Contains no personally identifiable information.</li>
-    </ul>
-    <p>We do <strong>not</strong> collect your name, email address, location, health records, or any information that could identify you personally, unless you voluntarily contact us for support.</p>
-  </div>
-
-  <div class="psec">
-    <h2>3. How We Use Your Information</h2>
-    <p>Information collected is used exclusively to:</p>
-    <ul>
-      <li>Display your personal progress, streaks, and goal tracking</li>
-      <li>Manage your app-blocking schedule using Apple's Screen Time framework</li>
-      <li>Enable Live Activity widgets showing your active session on the iOS lock screen</li>
-      <li>Identify and fix technical errors through anonymous crash logs</li>
-    </ul>
-    <p>We do not use your data for advertising, profiling, or any commercial purpose beyond operating the App.</p>
-  </div>
-
-  <div class="psec">
-    <h2>4. Data Storage and Security</h2>
-    <p>All personal fitness data is stored locally on your device using Apple's standard iOS data protection mechanisms. App-blocking is handled through Apple's Screen Time API — PouchFit never sees the contents of the apps you choose to block.</p>
-    <p>We take reasonable precautions to protect your data, but no method of storage is 100% secure. We encourage you to use a device passcode and keep your iOS version up to date.</p>
-  </div>
-
-  <div class="psec">
-    <h2>5. Third-Party Services</h2>
-    <p>PouchFit integrates with the following Apple platform services:</p>
-    <ul>
-      <li><strong>Apple Screen Time / FamilyControls framework</strong> — Powers the app-blocking feature. Data is governed by Apple's Privacy Policy and never leaves your device.</li>
-      <li><strong>Apple ActivityKit</strong> — Powers Live Activity lock screen widgets. Governed by Apple's Privacy Policy.</li>
-      <li><strong>iCloud (optional)</strong> — If enabled, app data may sync across your devices. Governed by Apple's iCloud Terms.</li>
-    </ul>
-    <p>We do not integrate any third-party advertising SDKs, analytics platforms, or social login systems. PouchFit is completely ad-free.</p>
-  </div>
-
-  <div class="psec">
-    <h2>6. Children's Privacy</h2>
-    <p>PouchFit is not directed at children under the age of 13. We do not knowingly collect any personal data from children. If you are a parent or guardian and believe your child has provided us with personal information, please contact us and we will promptly delete it.</p>
-  </div>
-
-  <div class="psec">
-    <h2>7. Your Rights</h2>
-    <p>Because PouchFit stores data locally on your device, you have full control:</p>
-    <ul>
-      <li>Reset all your data at any time from the App's Settings screen</li>
-      <li>Deleting the App removes all locally stored data immediately</li>
-      <li>Disable iCloud backup for PouchFit in iOS Settings → [Your Name] → iCloud</li>
-    </ul>
-    <p>If you are located in the European Economic Area (EEA), you have rights under GDPR including access, rectification, erasure, and objection. Contact us to exercise these rights.</p>
-  </div>
-
-  <div class="psec">
-    <h2>8. Data Retention</h2>
-    <p>We do not retain personal data on our servers. All fitness and goal data lives on your device (and optionally iCloud). Anonymous crash logs are retained for up to 90 days and then automatically deleted.</p>
-  </div>
-
-  <div class="psec">
-    <h2>9. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by updating the "Last updated" date at the top of this page. Your continued use of the App after changes are posted constitutes acceptance of the updated policy.</p>
-  </div>
-
-  <div class="psec">
-    <h2>10. Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy or our data practices:</p>
-    <div class="pcontact">
-      <p>📧 <strong>Email:</strong> <a href="mailto:privacy@pouchfitapp.com">privacy@pouchfitapp.com</a><br>
-      🥔 <strong>App:</strong> PouchFit — The anti-scroll fitness app<br>
-      🌏 <strong>Response time:</strong> Within 5 business days</p>
-    </div>
-  </div>
-
-</div>
-
-<footer>
-  <div class="footer-inner">
-    <a class="footer-logo to-landing" href="#page-landing">🥔 PouchFit</a>
-    <ul class="footer-links">
-      <li><a href="#page-landing" class="to-landing">Home</a></li>
-      <li><a href="#page-privacy" class="to-privacy">Privacy Policy</a></li>
-    </ul>
-    <div class="footer-copy">© 2025 PouchFit. Your data stays yours.</div>
-  </div>
-</footer>
-
-</div><!-- /page-privacy -->
 
 <script>
-  const landing = document.getElementById('page-landing');
-  const privacy = document.getElementById('page-privacy');
-  const pb      = document.querySelector('.page-break');
-
-  function showLanding() {
-    privacy.style.display = 'none';
-    pb.style.display      = 'block';
-    landing.style.display = 'block';
-    window.scrollTo(0, 0);
-  }
-  function showPrivacy() {
-    landing.style.display = 'none';
-    pb.style.display      = 'none';
-    privacy.style.display = 'block';
-    window.scrollTo(0, 0);
-  }
-
-  document.querySelectorAll('.to-privacy, [href="#page-privacy"]').forEach(el => {
-    el.addEventListener('click', e => { e.preventDefault(); showPrivacy(); });
-  });
-  document.querySelectorAll('.to-landing, [href="#page-landing"]').forEach(el => {
-    el.addEventListener('click', e => { e.preventDefault(); showLanding(); });
-  });
-
-  document.querySelectorAll('a[href^="#"]:not([href="#page-landing"]):not([href="#page-privacy"])').forEach(a => {
+  // Smooth scroll for in-page anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const t = document.querySelector(a.getAttribute('href'));
       if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
