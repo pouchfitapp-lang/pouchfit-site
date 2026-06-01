@@ -1,1 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy · PouchFit</title>
+<meta name="description" content="How PouchFit collects, uses, and protects your data. Plain-English privacy policy covering Apple/Google sign-in, data storage, your rights, and authentication details.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥔</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --text:   #1a1a1a;
+    --muted:  #6b6b6b;
+    --light:  #e5e5e5;
+    --bg-soft:#fafafa;
+    --accent: #F86D00;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    background: #fff;
+    padding: 56px 24px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .back {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 48px;
+    font-weight: 500;
+  }
+  .back:hover { color: var(--accent); }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .meta {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .toc {
+    background: var(--bg-soft);
+    border: 1px solid var(--light);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 48px;
+  }
+  .toc-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    counter-reset: toc;
+  }
+  .toc ol li {
+    counter-increment: toc;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  .toc ol li a {
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    padding: 4px 0;
+  }
+  .toc ol li a::before {
+    content: counter(toc) ". ";
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .toc ol li a:hover { color: var(--accent); }
+
+  section { margin-bottom: 36px; }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    scroll-margin-top: 24px;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 22px;
+    margin-bottom: 8px;
+    scroll-margin-top: 24px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  ul, ol {
+    padding-left: 22px;
+    margin: 8px 0 14px;
+  }
+  ul li, ol li {
+    margin-bottom: 6px;
+  }
+  ul { list-style: disc; }
+  ul li::marker { color: var(--muted); }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  a:hover { text-decoration: none; }
+
+  strong { font-weight: 600; color: var(--text); }
+
+  code {
+    font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
+    font-size: 0.875em;
+    background: var(--bg-soft);
+    border: 1px solid var(--light);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: #444;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 12px 0 16px;
+    border: 1px solid var(--light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--light);
+    vertical-align: top;
+  }
+  th {
+    font-weight: 600;
+    background: var(--bg-soft);
+    font-size: 0.85rem;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  .contact {
+    background: var(--bg-soft);
+    border: 1px solid var(--light);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-top: 12px;
+    font-size: 0.93rem;
+  }
+  .contact p { margin: 0; }
+
+  .divider {
+    border: 0;
+    border-top: 1px solid var(--light);
+    margin: 64px 0 48px;
+  }
+
+  .updated {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--light);
+    text-align: center;
+  }
+
+  @media (max-width: 520px) {
+    body { padding: 32px 20px 60px; font-size: 15px; }
+    h1 { font-size: 1.65rem; }
+    h2 { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="top">
+
+  <a class="back" href="/">← Back to PouchFit</a>
+
+  <h1>Privacy Policy</h1>
+  <p class="meta">Effective date: May 31, 2026 · Last updated: May 31, 2026</p>
+
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#p1">Overview</a></li>
+      <li><a href="#p2">Information We Collect</a></li>
+      <li><a href="#p3">How We Use Your Information</a></li>
+      <li><a href="#p4">Data Storage &amp; Security</a></li>
+      <li><a href="#p5">Third-Party Services</a></li>
+      <li><a href="#p6">App Tracking &amp; Advertising</a></li>
+      <li><a href="#p7">Children's Privacy</a></li>
+      <li><a href="#p8">Marketing Communications &amp; Your Choices</a></li>
+      <li><a href="#p9">Your Rights</a></li>
+      <li><a href="#p10">International Data Transfers</a></li>
+      <li><a href="#p11">Data Deletion</a></li>
+      <li><a href="#p12">Changes to This Policy</a></li>
+      <li><a href="#p13">Contact Us</a></li>
+      <li><a href="#authentication">Authentication &amp; Sign-In Data</a></li>
+    </ol>
+  </div>
+
+  <section id="p1">
+    <h2>1. Overview</h2>
+    <p>PouchFit ("we," "our," "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, store, and safeguard your information when you use the PouchFit mobile application (the "App" or "Service").</p>
+    <p>By creating an account or using PouchFit, you agree to the collection and use of information in accordance with this policy. If you do not agree with any part of this Privacy Policy, please do not use the App.</p>
+    <p>This Privacy Policy should be read alongside our Terms of Use.</p>
+  </section>
+  <section id="p2">
+    <h2>2. Information We Collect</h2>
+    <p>PouchFit collects the minimum amount of data necessary to provide and improve our Service.</p>
+
+    <h3>2.1 Account Information (stored on our servers)</h3>
+    <p>PouchFit does not store passwords. We use third-party authentication providers — <strong>Sign in with Apple</strong> and <strong>Google Sign-In</strong> — to verify your identity. When you sign up, the provider shares limited account information with us:</p>
+    <ul>
+      <li>Your name</li>
+      <li>Your email address (or an Apple private relay alias, if you choose "Hide My Email" during Apple sign-up)</li>
+      <li>A unique user identifier from the provider, used to recognize you on subsequent sign-ins</li>
+    </ul>
+    <p>This information is stored securely on our servers. For full details about what each provider shares, how Apple's "Hide My Email" works, and how to revoke access, see <a href="#authentication">Authentication &amp; Sign-In Data &nbsp;→</a>.</p>
+
+    <h3>2.2 Exercise &amp; Workout Data (stored locally on your device)</h3>
+    <ul>
+      <li>Exercise history and session logs</li>
+      <li>Daily and weekly progress data</li>
+      <li>Streak and goal completion records</li>
+      <li>Exercise preferences and settings</li>
+    </ul>
+    <p>This data lives exclusively on your device and is never transmitted to our servers.</p>
+
+    <h3>2.3 Screen Time Data (processed on-device only)</h3>
+    <p>PouchFit uses Apple's Screen Time API (FamilyControls framework) to manage app blocking. All Screen Time data — including which apps you select for blocking — is processed entirely on your device. We never access, collect, transmit, or store this data on any external server.</p>
+
+    <h3>2.4 Subscription Information (managed by Apple)</h3>
+    <p>Subscription purchases, billing, and payment information are managed entirely by Apple through StoreKit. We receive only your subscription status (active, expired, etc.) to unlock premium features. We do not process, store, or have access to your payment details, credit card information, or Apple ID.</p>
+
+    <h3>2.5 Automatically Collected Information</h3>
+    <p>We do not currently use third-party analytics, crash reporting, or advertising SDKs. If we introduce analytics or diagnostics tools in the future, we will update this Privacy Policy before doing so.</p>
+  </section>
+  <section id="p3">
+    <h2>3. How We Use Your Information</h2>
+    <p>We use the information we collect for the following purposes:</p>
+    <ul>
+      <li><strong>Provide the Service</strong> — track your exercise progress, manage app blocking based on your Screen Time preferences, display Live Activity updates during workout sessions, and manage your subscription status.</li>
+      <li><strong>Account management</strong> — maintain your account, authenticate your identity, and allow you to access PouchFit across devices.</li>
+      <li><strong>Communications</strong> — send service-related messages such as account confirmations, security notices, and important updates about the App.</li>
+      <li><strong>Marketing (with your consent)</strong> — if you opt in during sign-up, we may send promotional emails including tips, product updates, feature announcements, and special offers. You can opt out at any time (see Section 8).</li>
+      <li><strong>Improve the Service</strong> — use aggregated, anonymized data to understand usage patterns and improve PouchFit.</li>
+    </ul>
+    <p>We will never sell, rent, or trade your personal information to third parties.</p>
+  </section>
+  <section id="p4">
+    <h2>4. Data Storage &amp; Security</h2>
+    <h3>4.1 Where Your Data Lives</h3>
+    <table>
+      <tr><th>Data type</th><th>Storage location</th></tr>
+      <tr><td>Name &amp; email</td><td>Our secure servers (cloud-hosted)</td></tr>
+      <tr><td>Exercise &amp; workout data</td><td>Locally on your device</td></tr>
+      <tr><td>Screen Time selections</td><td>Locally on your device (Apple API)</td></tr>
+      <tr><td>Subscription status</td><td>Apple's servers (via StoreKit)</td></tr>
+    </table>
+
+    <h3>4.2 Security Measures</h3>
+    <p>We use industry-standard security measures to protect your personal information, including encryption in transit (TLS/SSL) and secure server infrastructure. However, no method of electronic transmission or storage is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.</p>
+
+    <h3>4.3 Data Retention</h3>
+    <ul>
+      <li><strong>Account data (name, email)</strong> — retained for as long as your account is active. On account deletion, your personal data is permanently removed from our servers within 30 days.</li>
+      <li><strong>Local data (exercise history, preferences)</strong> — stored on your device and deleted when you uninstall the App or clear the App's data.</li>
+      <li><strong>Marketing consent records</strong> — retained as long as necessary to demonstrate compliance with applicable laws, even after you opt out.</li>
+    </ul>
+  </section>
+  <section id="p5">
+    <h2>5. Third-Party Services</h2>
+    <p>PouchFit integrates with the following Apple platform services:</p>
+    <ul>
+      <li><strong>Apple StoreKit</strong> — for subscription and in-app purchase management</li>
+      <li><strong>Apple Screen Time API (FamilyControls)</strong> — for on-device app blocking</li>
+      <li><strong>Apple ActivityKit</strong> — for Live Activities during workout sessions</li>
+    </ul>
+    <p>These services are governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</p>
+    <p>If we introduce any third-party services in the future (such as analytics, email delivery providers, or crash reporting), we will update this Privacy Policy to reflect those changes and ensure such services comply with applicable data protection standards.</p>
+    <p><strong>Email service provider</strong> — to send marketing and transactional emails, we use a third-party email delivery service. This provider receives only your name and email address for the sole purpose of delivering emails on our behalf and is contractually prohibited from using your information for any other purpose.</p>
+  </section>
+  <section id="p6">
+    <h2>6. App Tracking &amp; Advertising</h2>
+    <p>PouchFit does <strong>not</strong> track you across other companies' apps or websites. We do not participate in ad networks, and we do not share your data with advertisers. Under Apple's App Tracking Transparency (ATT) framework, PouchFit indicates that it does not track users.</p>
+  </section>
+  <section id="p7">
+    <h2>7. Children's Privacy</h2>
+    <p>PouchFit does not knowingly collect personal information from children under the age of 13 (or the applicable minimum age in your jurisdiction — for example, 16 in certain European countries).</p>
+    <p>The Screen Time features in PouchFit use Apple's on-device APIs, and no data related to these features is shared externally.</p>
+    <p>If you are a parent or guardian and believe your child has provided us with personal information, please contact us at the address below. We will promptly delete such information from our servers.</p>
+  </section>
+  <section id="p8">
+    <h2>8. Marketing Communications &amp; Your Choices</h2>
+    <h3>8.1 Opt-In Consent</h3>
+    <p>During account creation, you may choose to receive marketing emails from PouchFit. This is entirely optional and is not required to use the App. We use a clear, unchecked opt-in checkbox — we never pre-select consent for you.</p>
+
+    <h3>8.2 What We Send</h3>
+    <p>Marketing emails may include exercise tips, product updates, new feature announcements, motivational content, and promotional offers related to PouchFit.</p>
+
+    <h3>8.3 How to Opt Out</h3>
+    <p>You can stop receiving marketing emails at any time by:</p>
+    <ul>
+      <li>Tapping the "Unsubscribe" link at the bottom of any marketing email</li>
+      <li>Updating your communication preferences in the App's settings</li>
+      <li>Contacting us at <a href="mailto:hello@pouchfitapp.com">hello@pouchfitapp.com</a></li>
+    </ul>
+    <p>Opt-out requests are processed within 10 business days. Even after opting out of marketing emails, you will continue to receive essential service-related communications (such as account security notices, subscription confirmations, and policy updates).</p>
+
+    <h3>8.4 CAN-SPAM Compliance</h3>
+    <p>All marketing emails from PouchFit comply with the CAN-SPAM Act. Every promotional email clearly identifies PouchFit as the sender, includes a valid physical mailing address, and contains a working unsubscribe mechanism.</p>
+  </section>
+  <section id="p9">
+    <h2>9. Your Rights</h2>
+    <p>Depending on your location, you may have some or all of the following rights regarding your personal data:</p>
+
+    <h3>9.1 All Users</h3>
+    <ul>
+      <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
+      <li><strong>Correction</strong> — request correction of inaccurate or incomplete personal data</li>
+      <li><strong>Deletion</strong> — request deletion of your account and associated personal data</li>
+      <li><strong>Withdraw consent</strong> — withdraw your consent for marketing communications at any time without affecting the lawfulness of prior processing</li>
+    </ul>
+
+    <h3>9.2 European Economic Area (EEA) Residents</h3>
+    <p>Under the General Data Protection Regulation (GDPR), you also have the right to object to or restrict processing, request data portability in a structured, machine-readable format, and lodge a complaint with your local data protection authority.</p>
+    <p><strong>Legal basis for processing (GDPR):</strong></p>
+    <table>
+      <tr><th>Purpose</th><th>Legal basis</th></tr>
+      <tr><td>Providing the Service</td><td>Performance of a contract (Art. 6(1)(b))</td></tr>
+      <tr><td>Account management</td><td>Performance of a contract (Art. 6(1)(b))</td></tr>
+      <tr><td>Marketing emails</td><td>Consent (Art. 6(1)(a))</td></tr>
+      <tr><td>Service improvement</td><td>Legitimate interest (Art. 6(1)(f))</td></tr>
+    </table>
+
+    <h3>9.3 California Residents (CCPA / CPRA)</h3>
+    <p>Under the California Consumer Privacy Act and California Privacy Rights Act, California residents have the right to know what personal data we collect, request deletion of personal data, opt out of the sale of personal data (PouchFit does <strong>not</strong> sell personal data), and non-discrimination for exercising privacy rights.</p>
+
+    <h3>9.4 Philippines Residents</h3>
+    <p>Under the Philippine Data Privacy Act of 2012 (Republic Act No. 10173), you have rights to information, access, correction, erasure, and to lodge complaints with the National Privacy Commission.</p>
+
+    <h3>9.5 How to Exercise Your Rights</h3>
+    <p>To exercise any of the above rights, contact us at <a href="mailto:hello@pouchfitapp.com">hello@pouchfitapp.com</a>. We will respond within 30 days (or sooner if required by applicable law). We may need to verify your identity before processing your request.</p>
+  </section>
+  <section id="p10">
+    <h2>10. International Data Transfers</h2>
+    <p>PouchFit is available internationally. If you use PouchFit from outside the country where our servers are located, your account information (name and email) may be transferred to and processed in a different jurisdiction. We take appropriate safeguards to ensure your data is protected in accordance with this Privacy Policy and applicable law.</p>
+  </section>
+  <section id="p11">
+    <h2>11. Data Deletion</h2>
+    <h3>11.1 Deleting Your Account</h3>
+    <p>You can request full deletion of your account and all associated personal data by:</p>
+    <ul>
+      <li>Using the account deletion option in the App's settings</li>
+      <li>Emailing us at <a href="mailto:hello@pouchfitapp.com">hello@pouchfitapp.com</a></li>
+    </ul>
+    <p>Upon receiving a deletion request, we will permanently erase your name, email address, and any associated records from our servers within 30 days.</p>
+
+    <h3>11.2 Deleting Local Data</h3>
+    <p>Exercise history, preferences, and Screen Time selections are stored locally on your device. Uninstalling PouchFit removes this data. You can also clear local data from within the App's settings.</p>
+  </section>
+  <section id="p12">
+    <h2>12. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we make material changes, we will:</p>
+    <ul>
+      <li>Update the "Last Updated" date at the top of this policy</li>
+      <li>Notify you through the App or via email (if you have an account)</li>
+    </ul>
+    <p>Continued use of PouchFit after changes become effective constitutes your acceptance of the revised Privacy Policy. If you disagree with any changes, please stop using the App and delete your account.</p>
+  </section>
+  <section id="p13">
+    <h2>13. Contact Us</h2>
+    <p>If you have questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out:</p>
+    <div class="contact">
+      <p>📧 <strong>Email:</strong> <a href="mailto:hello@pouchfitapp.com">hello@pouchfitapp.com</a><br>
+      🥔 <strong>App:</strong> PouchFit — Move while you scroll<br>
+      🌏 <strong>Response time:</strong> Within 30 days</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="authentication">
+    <h2>Authentication &amp; Sign-In Data</h2>
+    <p>This section explains how Apple and Google sign-in work in PouchFit, and exactly what we receive from each provider. It is incorporated by reference into the Privacy Policy above.</p>
+  <section id="auth-how-sign-in-works-in-pouchfit">
+    <h3>How sign-in works in PouchFit</h3>
+    <p>PouchFit uses two third-party authentication providers: <strong>Sign in with Apple</strong> and <strong>Google Sign-In</strong>. We do not store passwords ourselves — authentication is handled entirely by Apple or Google. When you sign in, the provider verifies your identity and shares a limited set of information with us.</p>
+    <p>You can sign in with either provider. We do not require you to use both, and we do not link accounts across providers.</p>
+  </section>
+  <section id="auth-what-we-receive-from-apple">
+    <h3>What we receive from Apple</h3>
+    <p>When you tap <strong>Sign in with Apple</strong>, Apple shares the following with us:</p>
+    <ul>
+      <li><strong>A unique, stable user identifier</strong> — this lets us recognize you across sign-ins. It is unique to PouchFit and cannot be used to identify you in any other app.</li>
+      <li><strong>An email address</strong> — either your real Apple ID email, or an anonymized <code>@privaterelay.appleid.com</code> address if you choose "Hide My Email" during sign-up.</li>
+      <li><strong>Your name</strong> — only on the first sign-up. Apple does not share your name on subsequent sign-ins, so we save it the first time you authenticate and reuse it from there.</li>
+    </ul>
+  </section>
+  <section id="auth-what-we-receive-from-google">
+    <h3>What we receive from Google</h3>
+    <p>When you tap <strong>Sign in with Google</strong>, Google shares the following with us:</p>
+    <ul>
+      <li><strong>A unique Google user ID</strong> for your PouchFit account</li>
+      <li><strong>Your email address</strong> — your real Gmail or Google Workspace email. Google does not offer an equivalent to Apple's Hide My Email.</li>
+      <li><strong>Your name and profile picture</strong></li>
+    </ul>
+    <p>We request only the basic "email" and "profile" scopes. We do not access your contacts, calendar, Drive files, or any other Google data.</p>
+  </section>
+  <section id="auth-what-we-store-on-our-servers">
+    <h3>What we store on our servers</h3>
+    <p>From both providers, we store only:</p>
+    <ul>
+      <li>Your name</li>
+      <li>Your email address (or Apple relay alias)</li>
+      <li>A reference ID linking you to your authentication provider</li>
+    </ul>
+    <p>We do <strong>not</strong> store passwords, profile pictures, or any other data the providers may share. Authentication tokens issued by Apple or Google are used only to verify your identity during a session and are not retained long-term.</p>
+  </section>
+  <section id="auth-apples-hide-my-email-feature">
+    <h3>Apple's "Hide My Email" feature</h3>
+    <p>If you used "Hide My Email" during Apple sign-up, the email address we have on file is an Apple-controlled relay alias that looks like <code>x7y9k2@privaterelay.appleid.com</code>. This alias is unique to PouchFit.</p>
+    <p>Emails we send to this address — including transactional emails (security notices, subscription confirmations) and marketing emails (if you opted in) — are forwarded by Apple to your real inbox. We never see your real Apple ID email.</p>
+    <p>You can revoke the email forwarding at any time in your Apple ID settings. Doing so will permanently break our ability to email you, but will not delete your PouchFit account.</p>
+  </section>
+  <section id="auth-revoking-access">
+    <h3>Revoking access</h3>
+    <p>You can disconnect PouchFit from your Apple or Google account at any time, directly from the provider's settings:</p>
+
+    <h3>Apple users</h3>
+    <p>Settings → [Your Name] → Sign in with Apple → PouchFit → <strong>Stop Using Apple ID</strong></p>
+
+    <h3>Google users</h3>
+    <p>Go to <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a> → find PouchFit → <strong>Remove access</strong></p>
+
+    <p>Revoking access at the provider level prevents future sign-ins but does <strong>not</strong> automatically delete your PouchFit account or the data we have on our servers. To fully delete your account, follow the steps in <a href="#top">Section 11 of our Privacy Policy</a>.</p>
+  </section>
+  <section id="auth-account-deletion">
+    <h3>Account deletion</h3>
+    <p>When you delete your PouchFit account (via the in-app setting or by emailing <a href="mailto:hello@pouchfitapp.com">hello@pouchfitapp.com</a>), we permanently remove from our servers within 30 days:</p>
+    <ul>
+      <li>Your name and email address (or Apple relay alias)</li>
+      <li>The provider reference ID</li>
+      <li>Any other account data stored on our servers</li>
+    </ul>
+    <p>We do not retain authentication tokens or credentials after deletion. If you later sign in again with the same Apple ID or Google account, a fresh PouchFit account will be created.</p>
+  </section>
+  <section id="auth-provider-privacy-policies">
+    <h3>Provider privacy policies</h3>
+    <p>The information Apple and Google share with us — and how they handle your data on their side — is governed by their own privacy policies:</p>
+    <ul>
+      <li><a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple Privacy Policy</a></li>
+      <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+    </ul>
+  </section>
+  </section>
+
+  <p class="updated">Apple, Apple ID, and "Sign in with Apple" are trademarks of Apple Inc. Google and "Sign in with Google" are trademarks of Google LLC. PouchFit is not affiliated with Apple Inc. or Google LLC.</p>
+
+</div>
+
+</body>
+</html>
 
