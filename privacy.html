@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PouchFit — Move first. Scroll second.</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:           #FFF7ED;
+    --bg-card:      #FFFFFF;
+    --bg-warm:      #FFF0E0;
+    --bg-warmer:    #FFE8D1;
+    --accent:       #F86D00;
+    --accent-dark:  #D45C00;
+    --accent-light: #FFD4A8;
+    --accent-pale:  #FFF0E0;
+    --text:         #1A1A1A;
+    --text-mid:     #555555;
+    --text-muted:   #AAAAAA;
+    --border:       rgba(248,109,0,0.14);
+    --border-mid:   rgba(248,109,0,0.3);
+    --radius:       24px;
+    --radius-lg:    32px;
+    --radius-sm:    14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,247,237,0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+  .nav-logo {
+    font-size: 1.35rem; font-weight: 800;
+    color: var(--text); text-decoration: none;
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-logo .dot { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted);
+    font-weight: 500; font-size: 0.93rem;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #fff;
+    padding: 10px 22px; border-radius: 50px;
+    font-weight: 600; font-size: 0.88rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  section { padding: 120px 5vw; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 62px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(248,109,0,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: -180px; right: -180px;
+    width: 640px; height: 640px;
+    background: radial-gradient(circle, rgba(248,109,0,0.14) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto; width: 100%;
+    position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--accent-pale);
+    border: 1px solid var(--border-mid);
+    color: var(--accent-dark);
+    font-size: 0.75rem; font-weight: 700;
+    padding: 6px 14px; border-radius: 50px;
+    margin-bottom: 1.6rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 1.6rem;
+  }
+  .hero h1 .hi {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .hi::after {
+    content: ''; position: absolute;
+    left: -2px; right: -2px; bottom: 4px;
+    height: 14px; background: var(--accent-light);
+    z-index: -1; border-radius: 4px;
+    transform: rotate(-1deg);
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    max-width: 440px;
+    margin-bottom: 2.2rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 16px 30px; border-radius: 50px;
+    font-weight: 700; font-size: 0.97rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 6px 24px rgba(248,109,0,0.32);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(248,109,0,0.4); }
+  .btn-ghost {
+    color: var(--text-mid); font-weight: 600;
+    font-size: 0.93rem; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--accent); }
+
+  /* ── PHONE MOCKUP (hero) ── */
+  .hero-visual { display: flex; justify-content: center; align-items: center; }
+  .phone-wrap { position: relative; }
+  .phone-frame {
+    width: 248px;
+    background: #111;
+    border-radius: 42px;
+    padding: 13px 11px;
+    box-shadow: 0 30px 70px rgba(26,26,26,0.18), 0 0 0 1px rgba(255,255,255,0.05);
+    animation: levitate 5s ease-in-out infinite;
+  }
+  @keyframes levitate {
+    0%,100% { transform: translateY(0px) rotate(-1.5deg); }
+    50%      { transform: translateY(-14px) rotate(-1.5deg); }
+  }
+  .phone-notch {
+    width: 76px; height: 6px;
+    background: #0a0a0a; border-radius: 3px;
+    margin: 0 auto 10px;
+  }
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 30px;
+    padding: 20px 14px;
+    min-height: 470px;
+  }
+  .app-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .app-greet { font-size: 0.62rem; color: var(--text-muted); font-weight: 500; }
+  .app-title { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.02em; }
+  .app-avo {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem;
+  }
+  .lock-card {
+    background: var(--accent); color: #fff;
+    border-radius: 16px; padding: 14px;
+    text-align: center; margin-bottom: 12px;
+    position: relative; overflow: hidden;
+  }
+  .lock-card::after {
+    content: '🔒'; position: absolute;
+    top: -2px; right: -2px; font-size: 2.6rem; opacity: 0.18;
+  }
+  .lock-label { font-size: 0.6rem; font-weight: 700; opacity: 0.8; letter-spacing: 0.08em; text-transform: uppercase; }
+  .lock-time { font-size: 2.2rem; font-weight: 800; line-height: 1; letter-spacing: -0.03em; margin: 4px 0; }
+  .lock-sub { font-size: 0.65rem; opacity: 0.85; }
+  .blocked-label { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .app-row {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 9px 11px; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .app-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; flex-shrink: 0;
+  }
+  .app-name { font-size: 0.72rem; font-weight: 700; flex: 1; }
+  .app-status {
+    font-size: 0.6rem; font-weight: 700;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;
+  }
+
+  /* Floating bubbles around hero phone */
+  .fp {
+    position: absolute;
+    background: var(--bg-card);
+    border: 1px solid var(--border-mid);
+    border-radius: 14px;
+    padding: 9px 13px;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--text);
+    box-shadow: 0 6px 22px rgba(26,26,26,0.08);
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .fp-1 { top: 30px;  right: -120px; animation: levitate 5s ease-in-out 0.4s infinite; }
+  .fp-2 { bottom: 80px; right: -100px; animation: levitate 5s ease-in-out 1.4s infinite; }
+  .fp-3 { top: 200px; left: -130px; animation: levitate 5s ease-in-out 2.2s infinite; }
+
+  /* ── PROBLEM SECTION ── */
+  .problem {
+    background: var(--bg);
+    padding: 130px 5vw 130px;
+    position: relative;
+    overflow: hidden;
+  }
+  .problem-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+  .problem-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .problem h2 {
+    font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .problem h2 .strike {
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 4px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .problem .punch {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.02em;
+  }
+  .problem .punch .num {
+    color: var(--accent);
+    font-weight: 800;
+    font-style: italic;
+  }
+  .problem .closer {
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+  /* floating screen-time card */
+  .st-floater {
+    position: absolute;
+    top: 40px; right: 4%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 14px 18px;
+    box-shadow: 0 12px 32px rgba(26,26,26,0.08);
+    transform: rotate(4deg);
+    width: 180px;
+  }
+  .st-floater .lbl { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+  .st-floater .val { font-size: 1.5rem; font-weight: 800; color: var(--text); letter-spacing: -0.03em; }
+  .st-floater .bar { height: 4px; background: var(--bg-warm); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .st-floater .bar::after { content: ''; display: block; width: 78%; height: 100%; background: var(--accent); border-radius: 2px; }
+  .st-floater-2 {
+    position: absolute;
+    bottom: 30px; left: 4%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 12px 16px;
+    box-shadow: 0 12px 32px rgba(26,26,26,0.08);
+    transform: rotate(-4deg);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .st-floater-2 .emoji { font-size: 1.5rem; }
+  .st-floater-2 .text { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+  /* ── WHY POUCHFIT (3 blocks, text-left / image-right) ── */
+  .why { padding: 60px 5vw 100px; }
+  .why-head {
+    max-width: 700px;
+    margin: 0 auto 80px;
+    text-align: center;
+  }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; width: 16px; height: 2px;
+    background: var(--accent); border-radius: 1px; display: block;
+  }
+  .why-head h2 {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+  .why-head .hi { color: var(--accent); font-style: italic; }
+  .why-head p { color: var(--text-mid); font-size: 1.05rem; }
+  .why-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 110px;
+  }
+  .why-row:last-child { margin-bottom: 0; }
+  .why-text .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+  }
+  .why-text h3 {
+    font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  .why-text h3 .hi { color: var(--accent); }
+  .why-text p {
+    font-size: 1.02rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    max-width: 420px;
+  }
+
+  /* Placeholder phone — abstract UI for swap-out */
+  .ph-placeholder {
+    width: 100%; max-width: 360px;
+    margin: 0 auto;
+    aspect-ratio: 9 / 16;
+    background: linear-gradient(160deg, var(--bg-warm) 0%, var(--accent-pale) 100%);
+    border-radius: 32px;
+    border: 1px dashed var(--border-mid);
+    padding: 28px 22px;
+    position: relative;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .ph-placeholder::before {
+    content: '';
+    position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 5px;
+    background: var(--accent-light); border-radius: 3px;
+    opacity: 0.6;
+  }
+  .ph-tag {
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--bg-card);
+    padding: 4px 10px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  /* abstract UI inside placeholders */
+  .ph-content { margin-top: 30px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .ph-block {
+    background: var(--bg-card); border-radius: 14px;
+    padding: 12px 14px; border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ph-block.big {
+    background: var(--accent); color: #fff;
+    border: none; padding: 16px 14px;
+    flex-direction: column; align-items: flex-start;
+  }
+  .ph-block.big .ph-big-label { font-size: 0.65rem; font-weight: 700; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.06em; }
+  .ph-block.big .ph-big-val { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; }
+  .ph-square { width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0; }
+  .ph-bar { height: 8px; background: var(--bg-warm); border-radius: 4px; flex: 1; }
+  .ph-bar-fill { background: var(--accent); height: 100%; border-radius: 4px; }
+  .ph-text-line { background: var(--text); opacity: 0.85; border-radius: 3px; height: 8px; width: 70%; }
+  .ph-text-line.short { width: 40%; opacity: 0.4; height: 6px; margin-top: 5px; }
+  .ph-locked-icon { background: var(--accent-pale); color: var(--accent); }
+  .ph-app-meta { flex: 1; }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    background: var(--bg-warm);
+    padding: 120px 5vw;
+  }
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .how-text .section-label { color: var(--accent); }
+  .how-text h2 {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 2.5rem;
+  }
+  .how-text h2 .hi { color: var(--accent); font-style: italic; }
+  .steps-list {
+    list-style: none;
+    display: flex; flex-direction: column;
+    gap: 1.8rem;
+  }
+  .step-item {
+    display: flex; align-items: flex-start; gap: 18px;
+  }
+  .step-num {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-weight: 800; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(248,109,0,0.32);
+    margin-top: 2px;
+  }
+  .step-content h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .step-content p {
+    font-size: 0.97rem;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+  .how-image .ph-placeholder { max-width: 380px; }
+
+  /* ── TESTIMONIALS ── */
+  .testi {
+    padding: 120px 5vw;
+  }
+  .testi-head { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+  .testi-head h2 {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+  .testi-head h2 .hi { color: var(--accent); font-style: italic; }
+  .testi-head p { color: var(--text-mid); font-size: 1rem; }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .tcard {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .tcard:hover { transform: translateY(-4px); border-color: var(--border-mid); }
+  .tstars { color: var(--accent); font-size: 0.95rem; letter-spacing: 2px; margin-bottom: 14px; }
+  .tcard p {
+    font-size: 0.97rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .tname { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+  .trole { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    padding: 140px 5vw;
+    position: relative; overflow: hidden;
+    background: var(--bg-warm);
+  }
+  .cta-section::before {
+    content: '🥔';
+    position: absolute; font-size: 24rem; opacity: 0.05;
+    top: 50%; left: 50%; transform: translate(-50%, -55%);
+    pointer-events: none; user-select: none;
+  }
+  .cta-inner { position: relative; max-width: 620px; margin: 0 auto; }
+  .cta-section h2 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 1.2rem;
+  }
+  .cta-section h2 .hi { color: var(--accent); font-style: italic; }
+  .cta-section .sub { color: var(--text-mid); margin-bottom: 2.5rem; font-size: 1.05rem; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-dark {
+    background: var(--text); color: #fff;
+    padding: 16px 30px; border-radius: 50px;
+    font-weight: 700; font-size: 0.95rem;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-dark:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.35);
+    padding: 44px 5vw;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-size: 1.2rem; font-weight: 800;
+    color: var(--accent);
+    text-decoration: none; letter-spacing: -0.02em;
+  }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none; font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-size: 0.82rem; }
+
+  /* ── PAGE BREAK ── */
+  .page-break {
+    height: 4px;
+    background: repeating-linear-gradient(to right, var(--accent) 0, var(--accent) 28px, var(--bg) 28px, var(--bg) 38px);
+  }
+
+  /* ── PRIVACY ── */
+  .privacy-hero {
+    background: var(--text);
+    padding: 130px 5vw 72px;
+    text-align: center;
+  }
+  .privacy-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+  .privacy-hero p { color: rgba(255,255,255,0.45); font-size: 0.92rem; }
+  .privacy-body {
+    max-width: 720px; margin: 0 auto;
+    padding: 64px 5vw 80px;
+    background: #fff;
+  }
+  .psec { margin-bottom: 2.8rem; }
+  .psec h2 {
+    font-size: 1.35rem; font-weight: 800;
+    color: var(--text); margin-bottom: 0.7rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-light);
+    letter-spacing: -0.02em;
+  }
+  .psec p {
+    color: #444; font-size: 0.93rem;
+    line-height: 1.8; margin-bottom: 0.7rem;
+  }
+  .psec ul { list-style: none; margin: 0.6rem 0; display: flex; flex-direction: column; gap: 5px; }
+  .psec ul li {
+    font-size: 0.91rem; color: #444; line-height: 1.7;
+    padding-left: 18px; position: relative;
+  }
+  .psec ul li::before {
+    content: '▸'; color: var(--accent);
+    position: absolute; left: 0; font-size: 0.75rem; top: 0.25em;
+  }
+  .pcontact {
+    background: var(--accent-pale);
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius);
+    padding: 22px 26px; margin-top: 1.5rem;
+  }
+  .pcontact p { margin: 0; font-size: 0.91rem; }
+  .pcontact a { color: var(--accent-dark); font-weight: 700; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 880px) {
+    .hero-inner   { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual  { display: none; }
+    .why-row      { grid-template-columns: 1fr; gap: 36px; margin-bottom: 80px; }
+    .how-inner    { grid-template-columns: 1fr; gap: 40px; }
+    .testi-grid   { grid-template-columns: 1fr; }
+    .st-floater, .st-floater-2 { display: none; }
+    .nav-links    { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     LANDING PAGE
+════════════════════════════════════════════ -->
+<div id="page-landing">
+
+<nav>
+  <a class="nav-logo" href="#page-landing">🥔 PouchFit<span class="dot">.</span></a>
+  <ul class="nav-links">
+    <li><a href="#why">Why PouchFit</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#page-privacy" class="to-privacy">Privacy</a></li>
+  </ul>
+  <a class="nav-cta" href="#cta">Get the app</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🥔 The anti-scroll fitness app</div>
+      <h1>Move first.<br>Then <span class="hi">scroll.</span></h1>
+      <p class="hero-sub">PouchFit locks your most-scrolled apps until you do a quick movement routine. No willpower required.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#cta">📱 Get PouchFit free</a>
+        <a class="btn-ghost" href="#how">How it works →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="app-topbar">
+              <div>
+                <div class="app-greet">Hey, you 👋</div>
+                <div class="app-title">PouchFit</div>
+              </div>
+              <div class="app-avo">🥔</div>
+            </div>
+            <div class="lock-card">
+              <div class="lock-label">Locked for</div>
+              <div class="lock-time">7 min</div>
+              <div class="lock-sub">Move to unlock 💪</div>
+            </div>
+            <div class="blocked-label">Currently blocked</div>
+            <div class="app-row">
+              <div class="app-icon" style="background:#FF0050;color:#fff;">♪</div>
+              <div class="app-name">TikTok</div>
+              <div class="app-status">🔒 Locked</div>
+            </div>
+            <div class="app-row">
+              <div class="app-icon" style="background:linear-gradient(135deg,#F58529,#DD2A7B);color:#fff;">📷</div>
+              <div class="app-name">Instagram</div>
+              <div class="app-status">🔒 Locked</div>
+            </div>
+            <div class="app-row">
+              <div class="app-icon" style="background:#1A1A1A;color:#fff;">𝕏</div>
+              <div class="app-name">X / Twitter</div>
+              <div class="app-status">🔒 Locked</div>
+            </div>
+          </div>
+        </div>
+        <div class="fp fp-1">🔒 3 apps locked</div>
+        <div class="fp fp-2">💪 5 min to unlock</div>
+        <div class="fp fp-3">🔥 12-day streak</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM SECTION -->
+<section class="problem">
+  <!-- floating cards -->
+  <div class="st-floater">
+    <div class="lbl">Screen time today</div>
+    <div class="val">4h 22m</div>
+    <div class="bar"></div>
+  </div>
+  <div class="st-floater-2">
+    <div class="emoji">😅</div>
+    <div class="text">"Just 5 more mins..."</div>
+  </div>
+
+  <div class="problem-inner">
+    <div class="problem-eyebrow">Real talk</div>
+    <h2>You opened TikTok<br>for <span class="strike">"just a minute."</span></h2>
+    <div class="punch">It's been <span class="num">47</span>.</div>
+    <p class="closer">No shame — we've all been the potato 🥔<br>PouchFit just makes sure your body gets a turn first.</p>
+  </div>
+</section>
+
+<!-- WHY POUCHFIT (3 rows, text-left/img-right) -->
+<section class="why" id="why">
+  <div class="why-head">
+    <div class="section-label">Why PouchFit</div>
+    <h2>Less scroll guilt.<br>More <span class="hi">guilt-free</span> scrolling.</h2>
+    <p>Three things that make PouchFit different from every fitness app you've quietly deleted.</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Row 1 -->
+    <div class="why-row">
+      <div class="why-text">
+        <div class="label">01 · The Lock</div>
+        <h3>Lock the apps<br>that <span class="hi">own you.</span></h3>
+        <p>Instagram. TikTok. X. Reddit. You pick what gets blocked. We make sure you've earned the unlock.</p>
+      </div>
+      <div class="why-image">
+        <div class="ph-placeholder">
+          <div class="ph-content">
+            <div class="ph-block">
+              <div class="ph-square" style="background:#FF0050;"></div>
+              <div class="ph-app-meta">
+                <div class="ph-text-line"></div>
+                <div class="ph-text-line short"></div>
+              </div>
+              <div class="ph-square ph-locked-icon" style="font-size:0.7rem;display:flex;align-items:center;justify-content:center;">🔒</div>
+            </div>
+            <div class="ph-block">
+              <div class="ph-square" style="background:linear-gradient(135deg,#F58529,#DD2A7B);"></div>
+              <div class="ph-app-meta">
+                <div class="ph-text-line"></div>
+                <div class="ph-text-line short"></div>
+              </div>
+              <div class="ph-square ph-locked-icon" style="font-size:0.7rem;display:flex;align-items:center;justify-content:center;">🔒</div>
+            </div>
+            <div class="ph-block">
+              <div class="ph-square" style="background:#1A1A1A;"></div>
+              <div class="ph-app-meta">
+                <div class="ph-text-line"></div>
+                <div class="ph-text-line short"></div>
+              </div>
+              <div class="ph-square ph-locked-icon" style="font-size:0.7rem;display:flex;align-items:center;justify-content:center;">🔒</div>
+            </div>
+          </div>
+          <div class="ph-tag">📱 Screenshot</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="why-row">
+      <div class="why-text">
+        <div class="label">02 · The Move</div>
+        <h3>5–15 min routines<br>made for <span class="hi">couches.</span></h3>
+        <p>Audio coach guides you so you don't even have to watch the screen. No gym, no gear, no sweat-shame.</p>
+      </div>
+      <div class="why-image">
+        <div class="ph-placeholder">
+          <div class="ph-content">
+            <div class="ph-block big">
+              <div class="ph-big-label">Now playing</div>
+              <div class="ph-big-val">▶ Seated Stretch</div>
+              <div style="height:6px;background:rgba(255,255,255,0.25);border-radius:3px;width:100%;margin-top:8px;overflow:hidden;">
+                <div style="height:100%;width:60%;background:#fff;border-radius:3px;"></div>
+              </div>
+            </div>
+            <div class="ph-block">
+              <div class="ph-square" style="background:var(--accent-pale);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">🦵</div>
+              <div class="ph-app-meta">
+                <div class="ph-text-line"></div>
+                <div class="ph-text-line short"></div>
+              </div>
+            </div>
+            <div class="ph-block">
+              <div class="ph-square" style="background:var(--accent-pale);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">🧘</div>
+              <div class="ph-app-meta">
+                <div class="ph-text-line"></div>
+                <div class="ph-text-line short"></div>
+              </div>
+            </div>
+          </div>
+          <div class="ph-tag">📱 Screenshot</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="why-row">
+      <div class="why-text">
+        <div class="label">03 · The Cheer Squad</div>
+        <h3>A potato that's <span class="hi">proud</span> of you.</h3>
+        <p>Streaks, daily minutes, and a tiny mascot that's quietly rooting for you. No leaderboards, no guilt trips.</p>
+      </div>
+      <div class="why-image">
+        <div class="ph-placeholder">
+          <div class="ph-content">
+            <div class="ph-block big">
+              <div class="ph-big-label">This week</div>
+              <div class="ph-big-val">🔥 12-day streak</div>
+              <div style="display:flex;gap:4px;margin-top:10px;">
+                <div style="flex:1;height:18px;background:rgba(255,255,255,0.85);border-radius:3px;"></div>
+                <div style="flex:1;height:18px;background:rgba(255,255,255,0.85);border-radius:3px;"></div>
+                <div style="flex:1;height:18px;background:rgba(255,255,255,0.85);border-radius:3px;"></div>
+                <div style="flex:1;height:18px;background:rgba(255,255,255,0.85);border-radius:3px;"></div>
+                <div style="flex:1;height:18px;background:rgba(255,255,255,0.85);border-radius:3px;"></div>
+                <div style="flex:1;height:18px;background:rgba(255,255,255,0.4);border-radius:3px;"></div>
+                <div style="flex:1;height:18px;background:rgba(255,255,255,0.4);border-radius:3px;"></div>
+              </div>
+            </div>
+            <div class="ph-block" style="flex-direction:column;align-items:center;gap:6px;padding:18px 12px;">
+              <div style="font-size:2.2rem;">🥔</div>
+              <div class="ph-text-line" style="width:60%;"></div>
+              <div class="ph-text-line short" style="margin:0;"></div>
+            </div>
+          </div>
+          <div class="ph-tag">📱 Screenshot</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="how-text">
+      <div class="section-label">How it works</div>
+      <h2>Move a little.<br>Scroll <span class="hi">guilt-free.</span></h2>
+      <ol class="steps-list">
+        <li class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Pick your temptations</h3>
+            <p>Choose which apps get blocked until you move.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Earn your scroll</h3>
+            <p>Start a quick 5–15 min routine to unlock them.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Move &amp; browse</h3>
+            <p>Your routine plays in the background while you use your apps freely.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Cycle repeats</h3>
+            <p>When the routine ends, apps lock again until your next session.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div class="how-image">
+      <div class="ph-placeholder">
+        <div class="ph-content">
+          <div class="ph-block big">
+            <div class="ph-big-label">Unlocked for</div>
+            <div class="ph-big-val">12:34</div>
+            <div style="height:6px;background:rgba(255,255,255,0.25);border-radius:3px;width:100%;margin-top:8px;overflow:hidden;">
+              <div style="height:100%;width:42%;background:#fff;border-radius:3px;"></div>
+            </div>
+          </div>
+          <div class="ph-block">
+            <div class="ph-square" style="background:#FF0050;"></div>
+            <div class="ph-app-meta">
+              <div class="ph-text-line"></div>
+              <div class="ph-text-line short"></div>
+            </div>
+            <div style="font-size:0.6rem;font-weight:700;color:var(--accent);">✓ OPEN</div>
+          </div>
+          <div class="ph-block">
+            <div class="ph-square" style="background:linear-gradient(135deg,#F58529,#DD2A7B);"></div>
+            <div class="ph-app-meta">
+              <div class="ph-text-line"></div>
+              <div class="ph-text-line short"></div>
+            </div>
+            <div style="font-size:0.6rem;font-weight:700;color:var(--accent);">✓ OPEN</div>
+          </div>
+        </div>
+        <div class="ph-tag">📱 Screenshot</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="testi-head">
+    <div class="section-label">Community</div>
+    <h2>People who'd rather <span class="hi">scroll.</span></h2>
+    <p>Real reviews from people who didn't think this would work either.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="tcard">
+      <div class="tstars">★★★★★</div>
+      <p>"PouchFit blocks Instagram until I move. I have never been so flexible against my will."</p>
+      <div class="tname">Mariel T.</div>
+      <div class="trole">Remote designer · Manila</div>
+    </div>
+    <div class="tcard">
+      <div class="tstars">★★★★★</div>
+      <p>"Unlocked TikTok by doing seated leg raises. 2025 is a wild year."</p>
+      <div class="tname">Dan A.</div>
+      <div class="trole">Engineer · Cebu</div>
+    </div>
+    <div class="tcard">
+      <div class="tstars">★★★★★</div>
+      <p>"The potato judges me with such love. 12-day streak and going 🥔"</p>
+      <div class="tname">Bea R.</div>
+      <div class="trole">Content creator · Davao</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <div class="section-label" style="justify-content:center;margin-bottom:1.4rem;">Start free</div>
+    <h2>Your couch.<br>Your <span class="hi">comeback.</span></h2>
+    <p class="sub">No subscriptions. No equipment. Just your body and that phone you can't put down.</p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="#">📱 Get it on iOS</a>
+      <a class="btn-dark" href="#how">How it works</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo" href="#page-landing">🥔 PouchFit</a>
+    <ul class="footer-links">
+      <li><a href="#why">Why PouchFit</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#page-privacy" class="to-privacy">Privacy Policy</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 PouchFit. Made with 🥔 &amp; love.</div>
+  </div>
+</footer>
+
+</div><!-- /page-landing -->
+
+<div class="page-break"></div>
+
+<!-- ═══════════════════════════════════════════
+     PRIVACY POLICY
+════════════════════════════════════════════ -->
+<div id="page-privacy" style="display:none; background:#fff;">
+
+<nav>
+  <a class="nav-logo" href="#page-landing" class="to-landing">🥔 PouchFit<span class="dot">.</span></a>
+  <ul class="nav-links">
+    <li><a href="#page-landing" class="to-landing">← Back to home</a></li>
+  </ul>
+  <a class="nav-cta to-landing" href="#page-landing">Home</a>
+</nav>
+
+<div class="privacy-hero">
+  <h1>Privacy Policy</h1>
+  <p>Effective date: June 1, 2025 &nbsp;·&nbsp; Last updated: June 1, 2025</p>
+</div>
+
+<div class="privacy-body">
+
+  <div class="psec">
+    <h2>1. Introduction</h2>
+    <p>Welcome to PouchFit ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and safeguard your data when you use the PouchFit mobile application ("App").</p>
+    <p>By using PouchFit, you agree to the collection and use of information in accordance with this policy. If you disagree with any part, please discontinue use of the App.</p>
+  </div>
+
+  <div class="psec">
+    <h2>2. Information We Collect</h2>
+    <p>We collect only what is necessary to operate and improve PouchFit. This includes:</p>
+    <ul>
+      <li><strong>Usage data</strong> — Exercise sessions completed, duration, streaks, daily goals, and which apps you've configured to be blocked. Stored locally on your device and optionally in iCloud if sync is enabled.</li>
+      <li><strong>Onboarding preferences</strong> — Your weekly movement goal and routine preferences. Stored locally.</li>
+      <li><strong>Crash and diagnostic data</strong> — Anonymous error reports to help us fix bugs. Contains no personally identifiable information.</li>
+    </ul>
+    <p>We do <strong>not</strong> collect your name, email address, location, health records, or any information that could identify you personally, unless you voluntarily contact us for support.</p>
+  </div>
+
+  <div class="psec">
+    <h2>3. How We Use Your Information</h2>
+    <p>Information collected is used exclusively to:</p>
+    <ul>
+      <li>Display your personal progress, streaks, and goal tracking</li>
+      <li>Manage your app-blocking schedule using Apple's Screen Time framework</li>
+      <li>Enable Live Activity widgets showing your active session on the iOS lock screen</li>
+      <li>Identify and fix technical errors through anonymous crash logs</li>
+    </ul>
+    <p>We do not use your data for advertising, profiling, or any commercial purpose beyond operating the App.</p>
+  </div>
+
+  <div class="psec">
+    <h2>4. Data Storage and Security</h2>
+    <p>All personal fitness data is stored locally on your device using Apple's standard iOS data protection mechanisms. App-blocking is handled through Apple's Screen Time API — PouchFit never sees the contents of the apps you choose to block.</p>
+    <p>We take reasonable precautions to protect your data, but no method of storage is 100% secure. We encourage you to use a device passcode and keep your iOS version up to date.</p>
+  </div>
+
+  <div class="psec">
+    <h2>5. Third-Party Services</h2>
+    <p>PouchFit integrates with the following Apple platform services:</p>
+    <ul>
+      <li><strong>Apple Screen Time / FamilyControls framework</strong> — Powers the app-blocking feature. Data is governed by Apple's Privacy Policy and never leaves your device.</li>
+      <li><strong>Apple ActivityKit</strong> — Powers Live Activity lock screen widgets. Governed by Apple's Privacy Policy.</li>
+      <li><strong>iCloud (optional)</strong> — If enabled, app data may sync across your devices. Governed by Apple's iCloud Terms.</li>
+    </ul>
+    <p>We do not integrate any third-party advertising SDKs, analytics platforms, or social login systems. PouchFit is completely ad-free.</p>
+  </div>
+
+  <div class="psec">
+    <h2>6. Children's Privacy</h2>
+    <p>PouchFit is not directed at children under the age of 13. We do not knowingly collect any personal data from children. If you are a parent or guardian and believe your child has provided us with personal information, please contact us and we will promptly delete it.</p>
+  </div>
+
+  <div class="psec">
+    <h2>7. Your Rights</h2>
+    <p>Because PouchFit stores data locally on your device, you have full control:</p>
+    <ul>
+      <li>Reset all your data at any time from the App's Settings screen</li>
+      <li>Deleting the App removes all locally stored data immediately</li>
+      <li>Disable iCloud backup for PouchFit in iOS Settings → [Your Name] → iCloud</li>
+    </ul>
+    <p>If you are located in the European Economic Area (EEA), you have rights under GDPR including access, rectification, erasure, and objection. Contact us to exercise these rights.</p>
+  </div>
+
+  <div class="psec">
+    <h2>8. Data Retention</h2>
+    <p>We do not retain personal data on our servers. All fitness and goal data lives on your device (and optionally iCloud). Anonymous crash logs are retained for up to 90 days and then automatically deleted.</p>
+  </div>
+
+  <div class="psec">
+    <h2>9. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by updating the "Last updated" date at the top of this page. Your continued use of the App after changes are posted constitutes acceptance of the updated policy.</p>
+  </div>
+
+  <div class="psec">
+    <h2>10. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy or our data practices:</p>
+    <div class="pcontact">
+      <p>📧 <strong>Email:</strong> <a href="mailto:privacy@pouchfitapp.com">privacy@pouchfitapp.com</a><br>
+      🥔 <strong>App:</strong> PouchFit — The anti-scroll fitness app<br>
+      🌏 <strong>Response time:</strong> Within 5 business days</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo to-landing" href="#page-landing">🥔 PouchFit</a>
+    <ul class="footer-links">
+      <li><a href="#page-landing" class="to-landing">Home</a></li>
+      <li><a href="#page-privacy" class="to-privacy">Privacy Policy</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 PouchFit. Your data stays yours.</div>
+  </div>
+</footer>
+
+</div><!-- /page-privacy -->
+
+<script>
+  const landing = document.getElementById('page-landing');
+  const privacy = document.getElementById('page-privacy');
+  const pb      = document.querySelector('.page-break');
+
+  function showLanding() {
+    privacy.style.display = 'none';
+    pb.style.display      = 'block';
+    landing.style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+  function showPrivacy() {
+    landing.style.display = 'none';
+    pb.style.display      = 'none';
+    privacy.style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  document.querySelectorAll('.to-privacy, [href="#page-privacy"]').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); showPrivacy(); });
+  });
+  document.querySelectorAll('.to-landing, [href="#page-landing"]').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); showLanding(); });
+  });
+
+  document.querySelectorAll('a[href^="#"]:not([href="#page-landing"]):not([href="#page-privacy"])').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
